@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 describe 'the person view', type: :feature do
-	
+  
 	let(:person) do
 		Person.create(first_name: 'John', last_name: 'Kowalski')
 	end
 
+  describe 'phone numbers' do
 	before(:each) do
 		person.phone_numbers.create(number: "132465879")
 		person.phone_numbers.create(number: "678954321")
@@ -53,5 +54,28 @@ describe 'the person view', type: :feature do
 			expect(page).to have_link('delete', href: phone_number_path(@phone), :method => "delete")
 		end
 	end
+  end
+
+
+  describe 'email addresses' do
+  	before(:each) do
+  		person.email_addresses.create(address: "1@1.pl")
+  		person.email_addresses.create(address: "2@2.pl")
+  		person.email_addresses.create(address: "3@3.pl")
+  		visit person_path(person)
+  	end
+
+  	it 'looks for LIs' do
+  		expect(page).to have_selector('li', text: '1@1.pl')
+  	end
+
+  	it 'has an add email address link' do
+  		expect(page).to have_link('Add email address', href: new_email_address_path(person_id: person.id))
+  		page.click_link('Add email address')
+  		visit new_email_address_path
+  	end
+
+
+  end
 
 end
