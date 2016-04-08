@@ -160,7 +160,7 @@ RSpec.describe PhoneNumbersController, type: :controller do
       }.to change(PhoneNumber, :count).by(-1)
     end
 
-    it "redirects to the phone_numbers list" do
+    xit "redirects to the phone_numbers list" do
       lasica = Person.create(first_name: 'Jam', last_name: 'Lasica')
       valid_attributes = { number: '222333444', person_id: lasica.id }
       phone_number = PhoneNumber.create! valid_attributes
