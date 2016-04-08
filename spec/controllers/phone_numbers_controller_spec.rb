@@ -161,9 +161,11 @@ RSpec.describe PhoneNumbersController, type: :controller do
     end
 
     it "redirects to the phone_numbers list" do
+      lasica = Person.create(first_name: 'Jam', last_name: 'Lasica')
+      valid_attributes = { number: '222333444', person_id: lasica.id }
       phone_number = PhoneNumber.create! valid_attributes
       delete :destroy, {:id => phone_number.to_param}, valid_session
-      expect(response).to redirect_to(phone_numbers_url)
+      expect(response).to redirect_to(lasica)
     end
   end
 
